@@ -18,7 +18,7 @@ function purchase(){
     prompt();
   });
 }
-
+//
 function prompt(){
     inquirer.prompt({
         name: "itemnumber",
