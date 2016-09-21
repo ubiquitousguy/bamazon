@@ -10,13 +10,16 @@ var connection = mysql.createConnection({
     database: "bamazonDB"
 })
 
-connection.connect(function(err) {
-    if (err) throw err;
-    console.log("connected as id " + connection.threadId);
-    start();
-})
+function purchase(){
+  connection.query('SELECT * FROM Products ORDER BY ProductID', function(err, response){
+    for(var i=0; i<response.length; i++){
+      console.log(response[i]);
+    }
+    prompt();
+  });
+}
 
-var start = function() {
+function prompt(){
     inquirer.prompt({
         name: "itemnumber",
         type: "input",
@@ -27,4 +30,14 @@ var start = function() {
       message: 'How many would you like to buy?',
       name: 'purchaseQuantity'
     }]).then(function(response){
-      connection.query('SELECT StockQuantity, Price FROM Products WHERE ?', {ProductID:response.itemNum}, function(err, res){
+      connection.query('SELECT StockQuantity, Price FROM Products WHERE ?', {ProductID:response.itemNum}, function(err, res){  if(res.StockQuantity > StockQuantity) {
+            console.log("Not enough stock quantity");
+          } else {
+            console.log("Preparing to do math");
+          }
+        // =====
+      });
+    });
+  });
+}
+purchase();
