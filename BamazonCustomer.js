@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 var inquirer = require('inquirer');
 var table= require('cli-table')
-
+// require table
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
