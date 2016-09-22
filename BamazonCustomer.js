@@ -36,7 +36,7 @@ function purchase() {
         for (var i = 0, l = res.length; i < l; i++) {
             products.push([res[i].id, res[i].product_name, '$' + res[i].price, res[i].qty]);
         }
-        console.table(['ID', 'Product', 'Department', 'Price', "Quantity"], products); //populate the table
+        console.table(['id', 'product_name', 'price', 'qty'], products); //populate the table
         //run prompt
         promptOrder();
     });

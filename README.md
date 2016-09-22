@@ -1,4 +1,6 @@
-<<<<<<< HEAD
+https://youtu.be/nWbgP9k5qh0
+
+
 # bamazon
 #Week of 12 HW: Node.js & MySQL
 
@@ -49,7 +51,4 @@ If you haven't written a markdown file yet, [click here for a rundown](https://g
 * This means updating the SQL database to reflect the remaining quantity.
 * Once the update goes through, show the customer the total cost of their purchase.
 
----------------------------------
-=======
-# bamazon
->>>>>>> aabb2d0a969d62fe428940244e393966cd6a89f9
+
