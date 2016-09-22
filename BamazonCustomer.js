@@ -36,7 +36,8 @@ function purchase() {
 
     //add question with products
     for(var i = 0, l = products.length; i < l; i++) {
-      productQuestion += ' (' + (products[i].item_id) + ' / ' + products[i].product_name + ' _ ' + '$' + products[i].price.toFixed(2) + '\n';
+      productQuestion +=
+      ' (' + (products[i].item_id) + ') / ' + products[i].product_name + ' _ ' + '$' + products[i].price.toFixed(2) + '\n';
     };
 
     // initiate
@@ -73,7 +74,7 @@ function purchase() {
       orderList.qty = result.qty;
 
       console.log ('Your order: ' +
-     +'(' + orderList.id + ') / ' +
+     '(' + orderList.id + ') / ' +
       orderList.item + ', ' + orderList.qty);
 
       //get confirmation
@@ -84,11 +85,11 @@ function purchase() {
   function promptConfirm() {
     var confirmQty = [
       {
-        name: 'confirm'
+        name: 'confirm',
         message: 'Confirm quantity Y/N',
         required: true,
         warning: 'Y or N only!',
-        validator: /^(?:|Y|n|N)$/,
+        // validator: /^(?:y|Y|n|N)$/,
       }
     ];
     prompt.get(confirmQty, function(err,result) {
@@ -115,16 +116,18 @@ function purchase() {
 function confirmOrder() {
   var promptConfirm = [
     {
-      name: 'confirm'
+      name: 'confirm',
       message: 'Confirm purchase Y/N',
       required: true,
       warning: 'Y or N only!'
-      validator: /^(?:y|Y|n|N)$/,
+      // validator: /^(?:y|Y|n|N)$/,
     }
   ];
   prompt.get(promptConfirm, function(err,result){
     result.confirm = result.confirm.toUpperCase();
     if (result.confirm == "Y") {
+      processOrder();
+    }else if (result.confirm == "N") {
       console.log('Order cancelled! \n');
 
       promptOrder();
@@ -133,8 +136,7 @@ function confirmOrder() {
 };
 
 // Update database
-function makeOrder() {
-
+function processOrder() {
   // Deduct order quantity
   var remainingQty = products[orderList.id - 1].qty - orderList.qty;
 
@@ -147,6 +149,6 @@ function makeOrder() {
       console.log('Thanks for your order! \n');
 
       purchase();
-
+      process.exit();
   });
 };
