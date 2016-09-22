@@ -9,7 +9,7 @@ var productQuestion = "";
 //create empty array for the products
 var products = [];
 //create object for the purchase
-var purchase = {
+var orderList = {
   id: "",
   item: "",
   quantity: "",
@@ -61,20 +61,20 @@ function purchase() {
       },
       {
         name: 'qty',
-        description: "Enter quanity",
+        description: "Enter quantity",
         required: true,
       }
     ];
     prompt.get(itemQty, function(err,result){
 
       //store result
-      purchase.id = result.item;
-      purchase.item = products[purchase.id - 1].product_name;
-      purchase.qty = result.qty;
+      orderList.id = result.item;
+      orderList.item = products[orderList.id - 1].product_name;
+      orderList.qty = result.qty;
 
       console.log ('Your order: ' +
-     +'(' + purchase.id + ') / ' +
-      purchase.item + ', ' + purchase.qty);
+     +'(' + orderList.id + ') / ' +
+      orderList.item + ', ' + orderList.qty);
 
       //get confirmation
       promptConfirm();
@@ -85,9 +85,9 @@ function purchase() {
     var confirmQty = [
       {
         name: 'confirm'
-        message: 'Confirm quanity Y/N',
+        message: 'Confirm quantity Y/N',
         required: true,
-        warning: 'Y or N only!'
+        warning: 'Y or N only!',
         validator: /^(?:|Y|n|N)$/,
       }
     ];
@@ -95,12 +95,12 @@ function purchase() {
       result.confirm = result.confirm.toUpperCase();
 
       if (result.confirm == "Y") {
-        if (purchase.qty > products[purchase.id - 1].qty){
-          console.log('Insuffient quanity. \n');
+        if (orderList.qty > products[orderList.id - 1].qty){
+          console.log('Insuffient quantity. \n');
           promptOrder();
         } else {
-          purchase.total = purchase.qty * products[purchase.id - 1].price;
-          console.log('Your total: $' + purchase.total.toFixed(2));
+          orderList.total = orderList.qty * products[orderList.id - 1].price;
+          console.log('Your total: $' + orderList.total.toFixed(2));
           confirmOrder();
         }
 
@@ -110,3 +110,43 @@ function purchase() {
       }
     });
   };
+
+  //prompt to confirm purchase
+function confirmOrder() {
+  var promptConfirm = [
+    {
+      name: 'confirm'
+      message: 'Confirm purchase Y/N',
+      required: true,
+      warning: 'Y or N only!'
+      validator: /^(?:y|Y|n|N)$/,
+    }
+  ];
+  prompt.get(promptConfirm, function(err,result){
+    result.confirm = result.confirm.toUpperCase();
+    if (result.confirm == "Y") {
+      console.log('Order cancelled! \n');
+
+      promptOrder();
+    }
+  });
+};
+
+// Update database
+function makeOrder() {
+
+  // Deduct order quantity
+  var remainingQty = products[orderList.id - 1].qty - orderList.qty;
+
+  // Update in database
+  connection.query('UPDATE products SET qty = ' + remainingQty + ' WHERE id = ' + orderList.id,
+
+    function(err, res){
+      if (err) throw err;
+
+      console.log('Thanks for your order! \n');
+
+      purchase();
+
+  });
+};
