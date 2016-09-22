@@ -12,7 +12,7 @@ CREATE TABLE Products (
   PRIMARY KEY (`id`)
 );
 
-INSERT INTO `Products` (`id`, `product_name`, `dept_name`, `price`, `qty`);
+INSERT INTO `Products` (`id`, `product_name`, `dept_name`, `price`, `qty`)
 VAlUES
   (1, `Apples`, `Produce`, .99, 20),
   (2, `Oranges`, `Produce`, 1.99, 20),
@@ -23,4 +23,4 @@ VAlUES
   (7, `Pears`, `Produce`, .79, 20),
   (8, `Peaches`, `Produce`, .69, 10),
   (9, `Blueberries`, `Produce`, 1.10, 20),
-  (10, `Bananas`, `Produce`, .19, 20),
+  (10, `Bananas`, `Produce`, .19, 20);
