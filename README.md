@@ -2,7 +2,7 @@ https://youtu.be/nWbgP9k5qh0
 
 
 # bamazon
-#Week of 12 HW: Node.js & MySQL
+Node.js & MySQL
 
 ### Overview
 
